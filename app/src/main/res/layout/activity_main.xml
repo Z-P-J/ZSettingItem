@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.zpj.widget.setting.SwitchSettingItem
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:z_setting_titleText="Title"
+        app:z_setting_infoText="Info"
+        app:z_setting_leftIcon="@mipmap/ic_launcher"
+        app:z_setting_checkable_checkedColor="@color/colorPrimary"
+        app:z_setting_checkable_normalColor="@color/colorAccent"
+        />
+
+    <com.zpj.widget.setting.CommonSettingItem
+        android:id="@+id/item_change_current_week"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:z_setting_titleText="Title"
+        app:z_setting_leftIcon="@mipmap/ic_launcher"
+        app:z_setting_showInfoBtn="true"
+        />
+
+</LinearLayout>
