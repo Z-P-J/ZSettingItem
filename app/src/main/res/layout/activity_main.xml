@@ -1,28 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <com.zpj.widget.setting.SwitchSettingItem
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:z_setting_titleText="Title"
-        app:z_setting_infoText="Info"
-        app:z_setting_leftIcon="@mipmap/ic_launcher"
-        app:z_setting_checkable_checkedColor="@color/colorPrimary"
-        app:z_setting_checkable_normalColor="@color/colorAccent"
-        />
+        android:orientation="vertical">
 
-    <com.zpj.widget.setting.CommonSettingItem
-        android:id="@+id/item_change_current_week"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:z_setting_titleText="Title"
-        app:z_setting_leftIcon="@mipmap/ic_launcher"
-        app:z_setting_showInfoBtn="true"
-        />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="应用设置"
+            android:gravity="center_vertical"
+            android:padding="5dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginTop="10dp"
+            />
 
-</LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:background="#eeeeee"
+            />
+
+        <com.zpj.widget.setting.SwitchSettingItem
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:z_setting_titleText="省流模式"
+            app:z_setting_infoText="开启该选项将进入省流模式"
+            app:z_setting_leftIcon="@mipmap/ic_launcher"
+            app:z_setting_checkable_checkedColor="@color/colorPrimary"
+            app:z_setting_checkable_normalColor="@color/colorAccent"
+            />
+
+        <com.zpj.widget.setting.SwitchSettingItem
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:z_setting_titleText="夜间模式"
+            />
+
+        <com.zpj.widget.setting.CommonSettingItem
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:z_setting_titleText="Title"
+            app:z_setting_leftIcon="@mipmap/ic_launcher"
+            app:z_setting_showInfoBtn="true"
+            />
+
+        <com.zpj.widget.setting.CommonSettingItem
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:z_setting_titleText="下载路径"
+            app:z_setting_infoText="/storage/emulated/0/Download/"
+            />
+
+        <com.zpj.widget.setting.CommonSettingItem
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:z_setting_titleText="检查更新"
+            app:z_setting_rightText="v 1.0.0"
+            />
+
+        <com.zpj.widget.setting.CommonSettingItem
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:z_setting_titleText="关于应用"
+            app:z_setting_infoText="更多关于应用的信息"
+            app:z_setting_showInfoBtn="true"
+            app:z_setting_titleTextColor="@color/colorAccent"
+            app:z_setting_infoTextColor="@android:color/black"
+            />
+
+    </LinearLayout>
+
+</ScrollView>

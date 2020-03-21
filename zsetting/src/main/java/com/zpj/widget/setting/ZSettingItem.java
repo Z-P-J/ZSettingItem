@@ -177,7 +177,7 @@ abstract class ZSettingItem extends BaseSettingItem {
         if (mLeftIcon != null) {
 //            mLeftIcon = tintDrawable(mLeftIcon, color);
             if (inflatedLeftIcon instanceof TintedImageView) {
-                TintedImageView imageView = ((TintedImageView) inflatedInfoButton);
+                TintedImageView imageView = ((TintedImageView) inflatedLeftIcon);
                 imageView.setImageDrawable(mLeftIcon);
                 imageView.setTint(ColorStateList.valueOf(color));
             }
