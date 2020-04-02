@@ -34,7 +34,9 @@ abstract class ZSettingItem extends BaseSettingItem {
     protected Drawable mLeftIcon;
     protected int mLeftIconTintColor;
     protected Drawable mRightIcon;
+    protected int mRightIconTintColor;
 
+    protected boolean showRightArrow;
     protected boolean showInfoButton;
     protected boolean showRightText;
     protected boolean showUnderLine;
@@ -62,14 +64,16 @@ abstract class ZSettingItem extends BaseSettingItem {
         }
         tvTitle.setText(mTitleText);
 
-        mTitleTextSize = array.getDimension(R.styleable.SimpleSettingItem_z_setting_titleTextSize, 16);
-        tvTitle.setTextSize(mTitleTextSize);
+        mTitleTextSize = array.getDimensionPixelSize(R.styleable.SimpleSettingItem_z_setting_titleTextSize, dp2pxInt(14));
+//        mTitleTextSize = array.getDimension(R.styleable.SimpleSettingItem_z_setting_titleTextSize, 14);
+        tvTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTitleTextSize);
         mTitleTextColor = array.getColor(R.styleable.SimpleSettingItem_z_setting_titleTextColor, Color.parseColor("#222222"));
         tvTitle.setTextColor(mTitleTextColor);
 
         Drawable background = array.getDrawable(R.styleable.SimpleSettingItem_z_setting_background);
         mLeftIcon = array.getDrawable(R.styleable.SimpleSettingItem_z_setting_leftIcon);
-        mLeftIconTintColor = array.getColor(R.styleable.SimpleSettingItem_z_setting_leftIconTint, Color.BLACK);
+        mLeftIconTintColor = array.getColor(R.styleable.SimpleSettingItem_z_setting_leftIconTint, Color.parseColor("#222222"));
+        mRightIconTintColor = array.getColor(R.styleable.SimpleSettingItem_z_setting_rightIconTint, Color.parseColor("#eeeeee"));
 //        if (mLeftIcon != null) {
 //            mLeftIcon = tintDrawable(mLeftIcon, mLeftIconTintColor);
 //        }
@@ -86,18 +90,19 @@ abstract class ZSettingItem extends BaseSettingItem {
             tvInfo.setText(mInfoText);
         }
 
-        mInfoTextSize = a.getFloat(R.styleable.ZSettingItem_z_setting_infoTextSize, 12);
-        tvInfo.setTextSize(mInfoTextSize);
+        mInfoTextSize = a.getDimensionPixelSize(R.styleable.ZSettingItem_z_setting_infoTextSize, dp2pxInt(12));
+        tvInfo.setTextSize(TypedValue.COMPLEX_UNIT_PX, mInfoTextSize);
 
-        mInfoTextColor = a.getColor(R.styleable.ZSettingItem_z_setting_infoTextColor, Color.LTGRAY);
+        mInfoTextColor = a.getColor(R.styleable.ZSettingItem_z_setting_infoTextColor, Color.parseColor("#808080"));
         tvInfo.setTextColor(mInfoTextColor);
 
         showUnderLine = a.getBoolean(R.styleable.ZSettingItem_z_setting_showUnderLine, false);
         showRightText = a.getBoolean(R.styleable.ZSettingItem_z_setting_showRightText, false);
         mRightText = a.getString(R.styleable.ZSettingItem_z_setting_rightText);
-        mRightTextSize = a.getFloat(R.styleable.ZSettingItem_z_setting_rightTextSize, 14);
-        mRightTextColor = a.getColor(R.styleable.ZSettingItem_z_setting_rightTextColor, Color.GRAY);
+        mRightTextSize = a.getDimensionPixelSize(R.styleable.ZSettingItem_z_setting_rightTextSize, dp2pxInt(14));
+        mRightTextColor = a.getColor(R.styleable.ZSettingItem_z_setting_rightTextColor, Color.parseColor("#808080"));
         showInfoButton = a.getBoolean(R.styleable.ZSettingItem_z_setting_showInfoBtn, false);
+        showRightArrow = a.getBoolean(R.styleable.ZSettingItem_z_setting_showRightArrow, true);
 
         a.recycle();
 
@@ -126,12 +131,16 @@ abstract class ZSettingItem extends BaseSettingItem {
 
     @Override
     public void inflateRightContainer(ViewStub viewStub) {
+        if (!showRightArrow) {
+            return;
+        }
         viewStub.setLayoutResource(R.layout.z_setting_right_container_arrow);
         viewStub.setInflatedId(R.id.iv_right_icon);
-        ImageView view = (ImageView) viewStub.inflate();
+        TintedImageView view = (TintedImageView) viewStub.inflate();
         if (mRightIcon != null) {
             view.setImageDrawable(mRightIcon);
         }
+        view.setTint(ColorStateList.valueOf(mRightIconTintColor));
     }
 
     @Override
@@ -157,6 +166,7 @@ abstract class ZSettingItem extends BaseSettingItem {
             viewStub.setLayoutResource(R.layout.z_setting_right_text);
             viewStub.setInflatedId(R.id.tv_right_text);
             TextView view = (TextView) viewStub.inflate();
+            view.setTextSize(TypedValue.COMPLEX_UNIT_PX, mRightTextSize);
             if (mRightText != null) {
                 view.setText(mRightText);
             }
@@ -189,6 +199,10 @@ abstract class ZSettingItem extends BaseSettingItem {
         }
         if (inflatedRightText instanceof TextView) {
             ((TextView) inflatedRightText).setTextColor(enabled ? mRightTextColor : Color.LTGRAY);
+        }
+        if (inflatedRightContainer instanceof TintedImageView) {
+            TintedImageView imageView = ((TintedImageView) inflatedRightContainer);
+            imageView.setTint(ColorStateList.valueOf(enabled ? mRightIconTintColor : Color.LTGRAY));
         }
     }
 

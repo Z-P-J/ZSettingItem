@@ -160,7 +160,7 @@ public abstract class BaseSettingItem extends RelativeLayout
     public abstract void onItemClick();
 
 
-    private int dp2pxInt(float dp) {
+    protected int dp2pxInt(float dp) {
         return (int) (dp * getResources().getDisplayMetrics().density + 0.5f);
     }
 

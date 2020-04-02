@@ -58,6 +58,7 @@ public abstract class CheckableSettingItem extends ZSettingItem {
             });
             switcher.setOnColor(checkedColor);
             switcher.setOffColor(normalColor);
+            switcher.setEnabled(isEnabled());
         }
     }
 

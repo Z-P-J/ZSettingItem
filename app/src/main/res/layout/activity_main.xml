@@ -41,6 +41,17 @@
             />
 
         <com.zpj.widget.setting.SwitchSettingItem
+            android:id="@+id/test"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:z_setting_titleText="省流模式"
+            app:z_setting_infoText="开启该选项将进入省流模式"
+            app:z_setting_leftIcon="@mipmap/ic_launcher"
+            app:z_setting_checkable_checkedColor="@color/colorPrimary"
+            app:z_setting_checkable_normalColor="@color/colorAccent"
+            />
+
+        <com.zpj.widget.setting.SwitchSettingItem
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:z_setting_titleText="夜间模式"
@@ -66,6 +77,7 @@
             android:layout_height="wrap_content"
             app:z_setting_titleText="检查更新"
             app:z_setting_rightText="v 1.0.0"
+            app:z_setting_rightIconTint="#000000"
             />
 
         <com.zpj.widget.setting.CommonSettingItem
@@ -76,6 +88,18 @@
             app:z_setting_showInfoBtn="true"
             app:z_setting_titleTextColor="@color/colorAccent"
             app:z_setting_infoTextColor="@android:color/black"
+            />
+
+        <com.zpj.widget.setting.CommonSettingItem
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:z_setting_titleText="Title"
+            app:z_setting_infoText="Info"
+            app:z_setting_rightText="v 1.0.0"
+            app:z_setting_titleTextSize="18sp"
+            app:z_setting_infoTextSize="14sp"
+            app:z_setting_rightTextSize="16sp"
+            app:z_setting_showRightArrow="false"
             />
 
     </LinearLayout>
