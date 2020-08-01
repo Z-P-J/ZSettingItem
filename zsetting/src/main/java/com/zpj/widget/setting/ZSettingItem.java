@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zpj.widget.setting.R;
+import com.zpj.widget.tinted.TintedImageButton;
 import com.zpj.widget.tinted.TintedImageView;
 
 abstract class ZSettingItem extends BaseSettingItem {
@@ -72,8 +73,8 @@ abstract class ZSettingItem extends BaseSettingItem {
 
         Drawable background = array.getDrawable(R.styleable.SimpleSettingItem_z_setting_background);
         mLeftIcon = array.getDrawable(R.styleable.SimpleSettingItem_z_setting_leftIcon);
-        mLeftIconTintColor = array.getColor(R.styleable.SimpleSettingItem_z_setting_leftIconTint, Color.parseColor("#222222"));
-        mRightIconTintColor = array.getColor(R.styleable.SimpleSettingItem_z_setting_rightIconTint, Color.parseColor("#eeeeee"));
+        mLeftIconTintColor = array.getColor(R.styleable.SimpleSettingItem_z_setting_leftIconTint, Color.TRANSPARENT);
+        mRightIconTintColor = array.getColor(R.styleable.SimpleSettingItem_z_setting_rightIconTint, Color.LTGRAY);
 //        if (mLeftIcon != null) {
 //            mLeftIcon = tintDrawable(mLeftIcon, mLeftIconTintColor);
 //        }
@@ -126,6 +127,9 @@ abstract class ZSettingItem extends BaseSettingItem {
             viewStub.setInflatedId(R.id.iv_left_icon);
             TintedImageView ivLeft = (TintedImageView) viewStub.inflate();
             ivLeft.setImageDrawable(mLeftIcon);
+            if (mLeftIconTintColor != Color.TRANSPARENT) {
+                ivLeft.setTint(mLeftIconTintColor);
+            }
         }
     }
 
@@ -136,7 +140,7 @@ abstract class ZSettingItem extends BaseSettingItem {
         }
         viewStub.setLayoutResource(R.layout.z_setting_right_container_arrow);
         viewStub.setInflatedId(R.id.iv_right_icon);
-        TintedImageView view = (TintedImageView) viewStub.inflate();
+        TintedImageButton view = (TintedImageButton) viewStub.inflate();
         if (mRightIcon != null) {
             view.setImageDrawable(mRightIcon);
         }
@@ -200,9 +204,9 @@ abstract class ZSettingItem extends BaseSettingItem {
         if (inflatedRightText instanceof TextView) {
             ((TextView) inflatedRightText).setTextColor(enabled ? mRightTextColor : Color.LTGRAY);
         }
-        if (inflatedRightContainer instanceof TintedImageView) {
-            TintedImageView imageView = ((TintedImageView) inflatedRightContainer);
-            imageView.setTint(ColorStateList.valueOf(enabled ? mRightIconTintColor : Color.LTGRAY));
+        if (inflatedRightContainer instanceof TintedImageButton) {
+            TintedImageButton btnRight = ((TintedImageButton) inflatedRightContainer);
+            btnRight.setTint(ColorStateList.valueOf(enabled ? mRightIconTintColor : Color.LTGRAY));
         }
     }
 
@@ -238,6 +242,21 @@ abstract class ZSettingItem extends BaseSettingItem {
             inflateLeftIcon(vsLeftIcon);
         } else if (inflatedLeftIcon instanceof ImageView) {
             ((ImageView) inflatedLeftIcon).setImageDrawable(mLeftIcon);
+        }
+    }
+
+    public void setRightIcon(Drawable mRightIcon) {
+        this.mRightIcon = mRightIcon;
+        if (inflatedRightContainer == null) {
+            inflateRightContainer(vsRightContainer);
+        } else if (inflatedRightContainer instanceof ImageView) {
+            ((ImageView) inflatedRightContainer).setImageDrawable(mRightIcon);
+        }
+    }
+
+    public void setInfoIcon(Drawable infoIcon) {
+        if (inflatedInfoButton instanceof ImageView) {
+            ((ImageView) inflatedInfoButton).setImageDrawable(infoIcon);
         }
     }
 
