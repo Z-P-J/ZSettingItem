@@ -105,7 +105,7 @@ public abstract class BaseSettingItem extends RelativeLayout
         int inflatedId = getInflatedId(stub, inflated);
         if (stub == vsLeftIcon) {
             inflatedLeftIcon = inflated;
-            params.height = dp2pxInt(24);
+            params.height = Utils.dp2pxInt(getContext(), 24);
             params.width = params.height;
             params.addRule(RelativeLayout.ALIGN_PARENT_START);
             contentContainerParams.addRule(END_OF, inflatedId);
@@ -117,7 +117,7 @@ public abstract class BaseSettingItem extends RelativeLayout
             contentContainerParams.setMarginEnd(getPaddingStart());
         } else if (stub == vsInfoButton) {
             inflatedInfoButton = inflated;
-            params.height = dp2pxInt(24);
+            params.height = Utils.dp2pxInt(getContext(), 24);
             params.width = params.height;
             if (inflatedRightContainer != null) {
                 params.addRule(RelativeLayout.START_OF, getInflatedId(vsRightContainer, inflatedRightContainer));
@@ -165,45 +165,6 @@ public abstract class BaseSettingItem extends RelativeLayout
     public abstract void inflateLeftIcon(ViewStub viewStub);
 
     public abstract void onItemClick();
-
-
-    public float density() {
-        return getResources().getDisplayMetrics().density;
-    }
-
-    public float dp2px(float dp) {
-        return dp * density();
-    }
-
-    public float px2dp(float px) {
-        return px / density();
-    }
-
-    public int dp2pxInt(float dp) {
-        return (int) (dp2px(dp) + 0.5f);
-    }
-
-    public int px2dpInt(float px) {
-        return (int) (px2dp(px) + 0.5f);
-    }
-
-    public int sp2px(float spValue) {
-        float fontScale = getResources().getDisplayMetrics().scaledDensity;
-        return (int) (spValue * fontScale + 0.5f);
-    }
-
-    public int px2sp(float pxValue) {
-        float fontScale = getResources().getDisplayMetrics().scaledDensity;
-        return (int) (pxValue / fontScale + 0.5f);
-    }
-
-    public int dp2sp(int dp) {
-        return px2sp(dp2px(dp));
-    }
-
-    public int sp2dp(int sp) {
-        return px2dpInt(sp2px(sp));
-    }
 
 }
 

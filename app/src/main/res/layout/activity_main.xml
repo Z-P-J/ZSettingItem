@@ -114,6 +114,14 @@
             app:z_setting_infoTextColor="@color/colorPrimary"
             />
 
+        <com.zpj.widget.setting.SimpleSettingItem
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:z_setting_titleText="测试"
+            app:z_setting_leftIcon="@mipmap/ic_launcher"
+            app:z_setting_rightIconTint="@color/colorPrimary"
+            />
+
     </LinearLayout>
 
 </ScrollView>

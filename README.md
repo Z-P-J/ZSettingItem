@@ -7,7 +7,7 @@
 ## Usage
 
  ```gradle
- implementation 'com.zpj.widget:ZSettingItem:1.0.2'
+ implementation 'com.zpj.widget:ZSettingItem:1.0.6'
  ```
 
  ```xml

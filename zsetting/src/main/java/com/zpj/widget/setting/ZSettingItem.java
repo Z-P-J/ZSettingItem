@@ -67,7 +67,7 @@ abstract class ZSettingItem extends BaseSettingItem {
         }
         tvTitle.setText(mTitleText);
 
-        mTitleTextSize = array.getDimensionPixelSize(R.styleable.SimpleSettingItem_z_setting_titleTextSize, dp2pxInt(14));
+        mTitleTextSize = array.getDimensionPixelSize(R.styleable.SimpleSettingItem_z_setting_titleTextSize, Utils.dp2pxInt(context, 14));
 //        mTitleTextSize = array.getInt(R.styleable.SimpleSettingItem_z_setting_titleTextSize, 14);
 //        mTitleTextSize = dp2sp((int) mTitleTextSize);
 //        mTitleTextSize = array.getDimension(R.styleable.SimpleSettingItem_z_setting_titleTextSize, 14);
@@ -95,7 +95,7 @@ abstract class ZSettingItem extends BaseSettingItem {
             tvInfo.setText(mInfoText);
         }
 
-        mInfoTextSize = a.getDimensionPixelSize(R.styleable.ZSettingItem_z_setting_infoTextSize, dp2pxInt(12));
+        mInfoTextSize = a.getDimensionPixelSize(R.styleable.ZSettingItem_z_setting_infoTextSize, Utils.dp2pxInt(context, 12));
         tvInfo.setTextSize(TypedValue.COMPLEX_UNIT_PX, mInfoTextSize);
 
         mInfoTextColor = a.getColor(R.styleable.ZSettingItem_z_setting_infoTextColor, Color.parseColor("#808080"));
@@ -104,7 +104,7 @@ abstract class ZSettingItem extends BaseSettingItem {
         showUnderLine = a.getBoolean(R.styleable.ZSettingItem_z_setting_showUnderLine, false);
         showRightText = a.getBoolean(R.styleable.ZSettingItem_z_setting_showRightText, false);
         mRightText = a.getString(R.styleable.ZSettingItem_z_setting_rightText);
-        mRightTextSize = a.getDimensionPixelSize(R.styleable.ZSettingItem_z_setting_rightTextSize, dp2pxInt(14));
+        mRightTextSize = a.getDimensionPixelSize(R.styleable.ZSettingItem_z_setting_rightTextSize, Utils.dp2pxInt(context, 14));
         mRightTextColor = a.getColor(R.styleable.ZSettingItem_z_setting_rightTextColor, Color.parseColor("#808080"));
         showInfoButton = a.getBoolean(R.styleable.ZSettingItem_z_setting_showInfoBtn, false);
         showRightArrow = a.getBoolean(R.styleable.ZSettingItem_z_setting_showRightArrow, true);
