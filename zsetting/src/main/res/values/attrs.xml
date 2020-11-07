@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+<!--    <attr name="z_setting_titleText" format="string"/>-->
+
     <declare-styleable name="SimpleSettingItem">
 
         <attr name="z_setting_titleText" format="string"/>

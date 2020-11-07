@@ -50,10 +50,17 @@ public abstract class BaseSettingItem extends RelativeLayout
         if (getMinimumHeight() == 0) {
             setMinimumHeight(getResources().getDimensionPixelSize(R.dimen.z_setting_item_min_height));
         }
+        int paddingH = getPaddingStart();
+        int paddingV = getPaddingTop();
+        int padding = getResources().getDimensionPixelSize(R.dimen.z_setting_item_default_padding);
         if (getPaddingStart() == 0 || getPaddingEnd() == 0) {
-            int padding = getResources().getDimensionPixelSize(R.dimen.z_setting_item_default_padding);
-            setPadding(padding, getPaddingTop(), padding, getPaddingBottom());
+            paddingH = padding;
+//            setPadding(padding, getPaddingTop(), padding, getPaddingBottom());
         }
+        if (getPaddingTop() == 0 || getPaddingBottom() == 0) {
+            paddingV = padding / 2;
+        }
+        setPadding(paddingH, paddingV, paddingH, paddingV);
 
         initView(context);
         initAttribute(context, attrs);
@@ -160,8 +167,42 @@ public abstract class BaseSettingItem extends RelativeLayout
     public abstract void onItemClick();
 
 
-    protected int dp2pxInt(float dp) {
-        return (int) (dp * getResources().getDisplayMetrics().density + 0.5f);
+    public float density() {
+        return getResources().getDisplayMetrics().density;
+    }
+
+    public float dp2px(float dp) {
+        return dp * density();
+    }
+
+    public float px2dp(float px) {
+        return px / density();
+    }
+
+    public int dp2pxInt(float dp) {
+        return (int) (dp2px(dp) + 0.5f);
+    }
+
+    public int px2dpInt(float px) {
+        return (int) (px2dp(px) + 0.5f);
+    }
+
+    public int sp2px(float spValue) {
+        float fontScale = getResources().getDisplayMetrics().scaledDensity;
+        return (int) (spValue * fontScale + 0.5f);
+    }
+
+    public int px2sp(float pxValue) {
+        float fontScale = getResources().getDisplayMetrics().scaledDensity;
+        return (int) (pxValue / fontScale + 0.5f);
+    }
+
+    public int dp2sp(int dp) {
+        return px2sp(dp2px(dp));
+    }
+
+    public int sp2dp(int sp) {
+        return px2dpInt(sp2px(sp));
     }
 
 }

@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewStub;
@@ -28,6 +29,7 @@ abstract class ZSettingItem extends BaseSettingItem {
     protected float mInfoTextSize;
     protected int mInfoTextColor;
 
+    protected TextView tvRight;
     protected String mRightText;
     protected float mRightTextSize;
     protected int mRightTextColor;
@@ -66,6 +68,8 @@ abstract class ZSettingItem extends BaseSettingItem {
         tvTitle.setText(mTitleText);
 
         mTitleTextSize = array.getDimensionPixelSize(R.styleable.SimpleSettingItem_z_setting_titleTextSize, dp2pxInt(14));
+//        mTitleTextSize = array.getInt(R.styleable.SimpleSettingItem_z_setting_titleTextSize, 14);
+//        mTitleTextSize = dp2sp((int) mTitleTextSize);
 //        mTitleTextSize = array.getDimension(R.styleable.SimpleSettingItem_z_setting_titleTextSize, 14);
         tvTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTitleTextSize);
         mTitleTextColor = array.getColor(R.styleable.SimpleSettingItem_z_setting_titleTextColor, Color.parseColor("#222222"));
@@ -169,10 +173,11 @@ abstract class ZSettingItem extends BaseSettingItem {
         if (showRightText) {
             viewStub.setLayoutResource(R.layout.z_setting_right_text);
             viewStub.setInflatedId(R.id.tv_right_text);
-            TextView view = (TextView) viewStub.inflate();
-            view.setTextSize(TypedValue.COMPLEX_UNIT_PX, mRightTextSize);
+            tvRight = (TextView) viewStub.inflate();
+            tvRight.setTextSize(TypedValue.COMPLEX_UNIT_PX, mRightTextSize);
+            tvRight.setTextColor(mRightTextColor);
             if (mRightText != null) {
-                view.setText(mRightText);
+                tvRight.setText(mRightText);
             }
         }
     }
@@ -183,9 +188,15 @@ abstract class ZSettingItem extends BaseSettingItem {
         if (enabled) {
             tvTitle.setTextColor(mTitleTextColor);
             tvInfo.setTextColor(mInfoTextColor);
+            if (tvRight != null) {
+                tvRight.setTextColor(mRightTextColor);
+            }
         } else {
             tvTitle.setTextColor(Color.LTGRAY);
             tvInfo.setTextColor(Color.LTGRAY);
+            if (tvRight != null) {
+                tvRight.setTextColor(Color.LTGRAY);
+            }
         }
         int color = enabled ? mLeftIconTintColor : Color.LTGRAY;
         if (mLeftIcon != null) {
@@ -210,13 +221,35 @@ abstract class ZSettingItem extends BaseSettingItem {
         }
     }
 
+    public TextView getTitleTextView() {
+        return tvTitle;
+    }
+
     public void setTitleText(String mTitleText) {
         this.mTitleText = mTitleText;
         tvTitle.setText(mTitleText);
     }
 
+    public void setTitleTextSize(float size) {
+        this.mTitleTextSize = size;
+        tvTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+    }
+
+    public void setTitleTextColor(int color) {
+        this.mTitleTextColor = color;
+        tvTitle.setTextColor(color);
+    }
+
+    public void setTitleTextMaxLine(int line) {
+        tvTitle.setMaxLines(line);
+    }
+
     public String getTitleText() {
         return mTitleText;
+    }
+
+    public TextView getInfoTextView() {
+        return tvInfo;
     }
 
     public void setInfoText(String mInfoText) {
@@ -224,17 +257,62 @@ abstract class ZSettingItem extends BaseSettingItem {
         tvInfo.setText(mInfoText);
     }
 
+    public String getInfoText() {
+        return mInfoText;
+    }
+
+    public void setInfoTextSize(float size) {
+        this.mInfoTextSize = size;
+        tvInfo.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+    }
+
+    public void setInfoTextColor(int color) {
+        this.mInfoTextColor = color;
+        tvInfo.setTextColor(color);
+    }
+
+    public void setInfoTextMaxLine(int line) {
+        tvInfo.setMaxLines(line);
+    }
+
+    public TextView getRightTextView() {
+        return tvRight;
+    }
+
+    public void setRightText(String text) {
+        this.mRightText = text;
+        tvRight.setText(text);
+    }
+
+    public String getRightText() {
+        return mRightText;
+    }
+
+    public void setRightTextSize(float size) {
+        this.mRightTextSize = size;
+        tvRight.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+    }
+
+    public void setRightTextColor(int color) {
+        this.mRightTextColor = color;
+        tvRight.setTextColor(color);
+    }
+
+    public void setRightTextMaxLine(int line) {
+        tvRight.setMaxLines(line);
+    }
+
     public void setOnInfoButtonClickListener(OnClickListener onInfoButtonClickListener) {
         this.onInfoButtonClickListener = onInfoButtonClickListener;
     }
 
-    public void setRightText(String mRightText) {
-
-        if (inflatedRightText instanceof TextView) {
-            this.mRightText = mRightText;
-            ((TextView) inflatedRightText).setText(mRightText);
-        }
-    }
+//    public void setRightText(String mRightText) {
+//
+//        if (inflatedRightText instanceof TextView) {
+//            this.mRightText = mRightText;
+//            ((TextView) inflatedRightText).setText(mRightText);
+//        }
+//    }
 
     public void setLeftIcon(Drawable mLeftIcon) {
         this.mLeftIcon = mLeftIcon;
@@ -258,14 +336,6 @@ abstract class ZSettingItem extends BaseSettingItem {
         if (inflatedInfoButton instanceof ImageView) {
             ((ImageView) inflatedInfoButton).setImageDrawable(infoIcon);
         }
-    }
-
-    public String getInfoText() {
-        return mInfoText;
-    }
-
-    public String getRightText() {
-        return mRightText;
     }
 
 

@@ -69,7 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:z_setting_titleText="下载路径"
-            app:z_setting_infoText="/storage/emulated/0/Download/"
+            app:z_setting_infoText="/storage/emulated/\n\n\n\n\n0/Download/"
             />
 
         <com.zpj.widget.setting.CommonSettingItem
@@ -100,6 +100,18 @@
             app:z_setting_infoTextSize="14sp"
             app:z_setting_rightTextSize="16sp"
             app:z_setting_showRightArrow="false"
+            />
+
+        <com.zpj.widget.setting.CommonSettingItem
+            android:id="@+id/item_test"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:z_setting_titleText="测试"
+            app:z_setting_infoText="info"
+            app:z_setting_rightText="xxxx"
+            app:z_setting_rightIconTint="#000000"
+            app:z_setting_rightTextColor="#000000"
+            app:z_setting_infoTextColor="@color/colorPrimary"
             />
 
     </LinearLayout>
