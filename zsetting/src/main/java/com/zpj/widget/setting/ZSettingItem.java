@@ -5,17 +5,14 @@ import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.zpj.widget.setting.R;
 import com.zpj.widget.tinted.TintedImageButton;
 import com.zpj.widget.tinted.TintedImageView;
 
@@ -38,12 +35,14 @@ abstract class ZSettingItem extends BaseSettingItem {
     protected int mLeftIconTintColor;
     protected Drawable mRightIcon;
     protected int mRightIconTintColor;
+    protected Drawable mArrowIcon;
+    protected int mArrowIconTintColor;
 
     protected boolean showRightArrow;
-    protected boolean showInfoButton;
+    protected boolean showRightButton;
     protected boolean showRightText;
     protected boolean showUnderLine;
-    private OnClickListener onInfoButtonClickListener;
+    private OnClickListener onRightButtonClickListener;
 
 
     public ZSettingItem(Context context) {
@@ -78,15 +77,15 @@ abstract class ZSettingItem extends BaseSettingItem {
         Drawable background = array.getDrawable(R.styleable.SimpleSettingItem_z_setting_background);
         mLeftIcon = array.getDrawable(R.styleable.SimpleSettingItem_z_setting_leftIcon);
         mLeftIconTintColor = array.getColor(R.styleable.SimpleSettingItem_z_setting_leftIconTint, Color.TRANSPARENT);
-        mRightIconTintColor = array.getColor(R.styleable.SimpleSettingItem_z_setting_rightIconTint, Color.LTGRAY);
-//        if (mLeftIcon != null) {
-//            mLeftIcon = tintDrawable(mLeftIcon, mLeftIconTintColor);
-//        }
+        mRightIconTintColor = array.getColor(R.styleable.SimpleSettingItem_z_setting_rightIconTint, Color.TRANSPARENT);
         mRightIcon = array.getDrawable(R.styleable.SimpleSettingItem_z_setting_rightIcon);
         array.recycle();
 
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ZSettingItem);
+
+        mArrowIconTintColor = array.getColor(R.styleable.ZSettingItem_z_setting_arrowIconTint, Color.LTGRAY);
+        mArrowIcon = array.getDrawable(R.styleable.ZSettingItem_z_setting_arrowIcon);
 
 
         mInfoText = a.getString(R.styleable.ZSettingItem_z_setting_infoText);
@@ -106,7 +105,7 @@ abstract class ZSettingItem extends BaseSettingItem {
         mRightText = a.getString(R.styleable.ZSettingItem_z_setting_rightText);
         mRightTextSize = a.getDimensionPixelSize(R.styleable.ZSettingItem_z_setting_rightTextSize, Utils.dp2pxInt(context, 14));
         mRightTextColor = a.getColor(R.styleable.ZSettingItem_z_setting_rightTextColor, Color.parseColor("#808080"));
-        showInfoButton = a.getBoolean(R.styleable.ZSettingItem_z_setting_showInfoBtn, false);
+        showRightButton = a.getBoolean(R.styleable.ZSettingItem_z_setting_showRightBtn, false);
         showRightArrow = a.getBoolean(R.styleable.ZSettingItem_z_setting_showRightArrow, true);
 
         a.recycle();
@@ -145,26 +144,38 @@ abstract class ZSettingItem extends BaseSettingItem {
         viewStub.setLayoutResource(R.layout.z_setting_right_container_arrow);
         viewStub.setInflatedId(R.id.iv_right_icon);
         TintedImageButton view = (TintedImageButton) viewStub.inflate();
-        if (mRightIcon != null) {
-            view.setImageDrawable(mRightIcon);
+//        if (mRightIcon != null) {
+//            view.setImageDrawable(mRightIcon);
+//        }
+//        view.setTint(ColorStateList.valueOf(mRightIconTintColor));
+        if (mArrowIcon != null) {
+            view.setImageDrawable(mArrowIcon);
         }
-        view.setTint(ColorStateList.valueOf(mRightIconTintColor));
+        if (mArrowIconTintColor != Color.TRANSPARENT) {
+            view.setTint(ColorStateList.valueOf(mArrowIconTintColor));
+        }
     }
 
     @Override
     public void inflateInfoButton(ViewStub viewStub) {
-        if (showInfoButton) {
+        if (showRightButton) {
             viewStub.setLayoutResource(R.layout.z_setting_info_btn);
             viewStub.setInflatedId(R.id.iv_info_btn);
-            View view = viewStub.inflate();
+            TintedImageView view = (TintedImageView) viewStub.inflate();
             view.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (onInfoButtonClickListener != null) {
-                        onInfoButtonClickListener.onClick(v);
+                    if (onRightButtonClickListener != null) {
+                        onRightButtonClickListener.onClick(v);
                     }
                 }
             });
+            if (mRightIcon != null) {
+                view.setImageDrawable(mRightIcon);
+            }
+            if (mRightIconTintColor != Color.TRANSPARENT) {
+                view.setTint(ColorStateList.valueOf(mRightIconTintColor));
+            }
         }
     }
 
@@ -209,15 +220,26 @@ abstract class ZSettingItem extends BaseSettingItem {
         }
         if (inflatedInfoButton instanceof TintedImageView) {
             TintedImageView imageView = ((TintedImageView) inflatedInfoButton);
-            imageView.setImageResource(R.drawable.ic_info_black_24dp);
-            imageView.setTint(ColorStateList.valueOf(color));
+            if (mRightIcon != null) {
+                imageView.setImageResource(R.drawable.ic_info_black_24dp);
+            }
+            if (enabled && mRightIconTintColor == Color.TRANSPARENT) {
+                imageView.clearColorFilter();
+            } else {
+                imageView.setTint(ColorStateList.valueOf(enabled ? mRightIconTintColor : Color.LTGRAY));
+            }
         }
         if (inflatedRightText instanceof TextView) {
             ((TextView) inflatedRightText).setTextColor(enabled ? mRightTextColor : Color.LTGRAY);
         }
         if (inflatedRightContainer instanceof TintedImageButton) {
             TintedImageButton btnRight = ((TintedImageButton) inflatedRightContainer);
-            btnRight.setTint(ColorStateList.valueOf(enabled ? mRightIconTintColor : Color.LTGRAY));
+//            btnRight.setTint(ColorStateList.valueOf(enabled ? mRightIconTintColor : Color.LTGRAY));
+            if (enabled && mArrowIconTintColor == Color.TRANSPARENT) {
+                btnRight.clearColorFilter();
+            } else {
+                btnRight.setTint(ColorStateList.valueOf(enabled ? mArrowIconTintColor : Color.LTGRAY));
+            }
         }
     }
 
@@ -302,8 +324,8 @@ abstract class ZSettingItem extends BaseSettingItem {
         tvRight.setMaxLines(line);
     }
 
-    public void setOnInfoButtonClickListener(OnClickListener onInfoButtonClickListener) {
-        this.onInfoButtonClickListener = onInfoButtonClickListener;
+    public void setOnRightButtonClickListener(OnClickListener onRightButtonClickListener) {
+        this.onRightButtonClickListener = onRightButtonClickListener;
     }
 
 //    public void setRightText(String mRightText) {
@@ -324,26 +346,28 @@ abstract class ZSettingItem extends BaseSettingItem {
     }
 
     public void setRightIcon(Drawable mRightIcon) {
+//        this.mRightIcon = mRightIcon;
+//        if (inflatedRightContainer == null) {
+//            inflateRightContainer(vsRightContainer);
+//        } else if (inflatedRightContainer instanceof ImageView) {
+//            ((ImageView) inflatedRightContainer).setImageDrawable(mRightIcon);
+//        }
         this.mRightIcon = mRightIcon;
-        if (inflatedRightContainer == null) {
-            inflateRightContainer(vsRightContainer);
-        } else if (inflatedRightContainer instanceof ImageView) {
-            ((ImageView) inflatedRightContainer).setImageDrawable(mRightIcon);
-        }
-    }
-
-    public void setInfoIcon(Drawable infoIcon) {
         if (inflatedInfoButton instanceof ImageView) {
-            ((ImageView) inflatedInfoButton).setImageDrawable(infoIcon);
+            ((ImageView) inflatedRightContainer).setImageDrawable(mRightIcon);
+        } else {
+            inflateInfoButton(vsInfoButton);
         }
     }
 
-
-//    private Drawable tintDrawable(Drawable drawable, int color) {
-//        final Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
-//        DrawableCompat.setTintList(wrappedDrawable, ColorStateList.valueOf(color));
-//        return wrappedDrawable;
-//    }
+    public void setArrowIcon(Drawable arrowIcon) {
+        this.mArrowIcon = arrowIcon;
+        if (inflatedRightContainer instanceof ImageView) {
+            ((ImageView) inflatedRightContainer).setImageDrawable(arrowIcon);
+        } else {
+            inflateRightContainer(vsRightContainer);
+        }
+    }
 
 }
 

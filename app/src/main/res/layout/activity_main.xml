@@ -62,7 +62,8 @@
             android:layout_height="wrap_content"
             app:z_setting_titleText="Title"
             app:z_setting_leftIcon="@mipmap/ic_launcher"
-            app:z_setting_showInfoBtn="true"
+            app:z_setting_showRightBtn="true"
+            app:z_setting_rightIconTint="@color/colorPrimary"
             />
 
         <com.zpj.widget.setting.CommonSettingItem
@@ -85,7 +86,8 @@
             android:layout_height="wrap_content"
             app:z_setting_titleText="关于应用"
             app:z_setting_infoText="更多关于应用的信息"
-            app:z_setting_showInfoBtn="true"
+            app:z_setting_showRightBtn="true"
+            app:z_setting_rightIcon="@mipmap/ic_launcher_round"
             app:z_setting_titleTextColor="@color/colorAccent"
             app:z_setting_infoTextColor="@android:color/black"
             />
@@ -103,16 +105,29 @@
             />
 
         <com.zpj.widget.setting.CommonSettingItem
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:z_setting_titleText="Title"
+            app:z_setting_infoText="Info"
+            app:z_setting_rightText="v 1.0.0"
+            app:z_setting_titleTextSize="18sp"
+            app:z_setting_infoTextSize="14sp"
+            app:z_setting_rightTextSize="16sp"
+            app:z_setting_showRightArrow="true"
+            app:z_setting_arrowIcon="@drawable/ic_info_black_24dp"
+            />
+
+
+        <com.zpj.widget.setting.CommonSettingItem
             android:id="@+id/item_test"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:z_setting_titleText="测试"
+            app:z_setting_arrowIconTint="#000000"
             app:z_setting_infoText="info"
-            app:z_setting_rightText="xxxx"
-            app:z_setting_rightIconTint="#000000"
-            app:z_setting_rightTextColor="#000000"
             app:z_setting_infoTextColor="@color/colorPrimary"
-            />
+            app:z_setting_rightText="xxxx"
+            app:z_setting_rightTextColor="#000000"
+            app:z_setting_titleText="测试" />
 
         <com.zpj.widget.setting.SimpleSettingItem
             android:layout_width="match_parent"

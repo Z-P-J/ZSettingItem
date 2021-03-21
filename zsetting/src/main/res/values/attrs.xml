@@ -9,9 +9,9 @@
         <attr name="z_setting_titleTextSize" format="dimension"/>
         <attr name="z_setting_titleTextColor" format="color"/>
 
-        <attr name="z_setting_leftIcon" format="integer"/>
+        <attr name="z_setting_leftIcon" format="reference"/>
         <attr name="z_setting_leftIconTint" format="color"/>
-        <attr name="z_setting_rightIcon" format="integer"/>
+        <attr name="z_setting_rightIcon" format="reference"/>
         <attr name="z_setting_rightIconTint" format="color"/>
 
         <attr name="z_setting_background" format="integer"/>
@@ -29,10 +29,12 @@
         <attr name="z_setting_rightTextColor" format="color"/>
 
         <attr name="z_setting_showUnderLine" format="boolean"/>
-        <attr name="z_setting_showInfoBtn" format="boolean"/>
+        <attr name="z_setting_showRightBtn" format="boolean"/>
         <attr name="z_setting_showRightText" format="boolean"/>
 
         <attr name="z_setting_showRightArrow" format="boolean"/>
+        <attr name="z_setting_arrowIcon" format="reference"/>
+        <attr name="z_setting_arrowIconTint" format="color"/>
 
 
     </declare-styleable>
